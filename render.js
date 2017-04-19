@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 const argv = require("optimist").argv;
 
-["arms", "tiles", "height", "width"].forEach(arg => {
+["arms", "tiles", "height", "width", "offset"].forEach(arg => {
   if (!argv[arg]) {
     console.error("need", arg);
     process.exit(1);
   }
 });
 
-const tag = `a${argv.arms}t${argv.tiles}w${argv.width}h${argv.height}`;
+const tag = `a${argv.arms}t${argv.tiles}w${argv.width}h${argv.height}o${argv.offset}`;
 const name = `render-${tag}`;
 
 require("shelljs/global");
@@ -18,6 +18,7 @@ mkdir("-p", "build");
 cat("shader.glsl")
   .sed("float arms = 1.0;", `float arms = ${argv.arms}.0;`)
   .sed("float tiles = 4.0;", `float tiles = ${argv.tiles}.0;`)
+  .sed("float offset = 0.0;", `float offset = ${argv.offset}.0;`)
   .to(`build/${name}.glsl`);
 
 exec(

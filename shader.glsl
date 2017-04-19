@@ -52,9 +52,11 @@ void mainImage( out vec4 fragColor, in vec2 fragCoord )
     // Visualization params:
     float arms = 1.0;
     float tightness = 1.5 * arms;
+    float offset = 0.0;
 
     // Compute swirl:
     float hue = spin * polar.x * arms
+        + offset
         + mod(arms, 2.0) * sy * 0.25
         + spin * rel.x * rel.y / res.x / res.y * tightness;
 
